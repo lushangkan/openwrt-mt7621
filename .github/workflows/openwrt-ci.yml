@@ -32,6 +32,10 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: openwrt-23.05
+      
+      - name: Checkout to openwrt-23.05-rc2
+        run: |
+          git checkout v23.05.0-rc2
 
       - name: Space cleanup
         env:
