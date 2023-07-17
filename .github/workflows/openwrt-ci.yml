@@ -29,13 +29,9 @@ jobs:
     steps:
     
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
-          ref: openwrt-23.05
-      
-      - name: Checkout to openwrt-23.05-rc2
-        run: |
-          git checkout v23.05.0-rc2
+          ref: v23.05.0-rc2
 
       - name: Space cleanup
         env:
@@ -56,6 +52,15 @@ jobs:
           # ln -s /mnt/openwrt/staging_dir ./staging_dir
 
           df -h
+          
+      - name: Add custom feeds
+        run: |
+          cat >> feeds.conf.default << EOF
+          src-git kenzo https://github.com/kenzok8/openwrt-packages
+          src-git small https://github.com/kenzok8/small
+          src-git mtk https://github.com/Nossiac/mtk-openwrt-feeds
+          src-git custom https://github.com/lushangkan/custom-openwrt-packages
+          EOF
 
       - name: Update feeds
         run: |
